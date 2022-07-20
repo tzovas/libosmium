@@ -277,6 +277,7 @@ if(CMAKE_BUILD_TYPE)
     set(build_type ${CMAKE_BUILD_TYPE})
 else()
     set(build_type "RelWithDebInfo")
+    #set(build_type "Release")
 endif()
 
 set(CMAKE_BUILD_TYPE ${build_type}

@@ -106,9 +106,9 @@ endif()
 
 #----------------------------------------------------------------------
 # Component 'ogr' is an alias for 'gdal'
-if(Osmium_USE_OGR)
-    set(Osmium_USE_GDAL TRUE)
-endif()
+#if(Osmium_USE_OGR)
+#    set(Osmium_USE_GDAL TRUE)
+#endif()
 
 #----------------------------------------------------------------------
 # Component 'pbf'
@@ -117,21 +117,21 @@ if(Osmium_USE_PBF)
     find_package(Threads)
     find_package(Protozero 1.6.3)
 
-    if(Osmium_USE_LZ4)
-        find_package(LZ4 REQUIRED)
-        add_definitions(-DOSMIUM_WITH_LZ4)
-    endif()
+#    if(Osmium_USE_LZ4)
+#        find_package(LZ4 REQUIRED)
+#        add_definitions(-DOSMIUM_WITH_LZ4)
+#    endif()
 
     list(APPEND OSMIUM_EXTRA_FIND_VARS ZLIB_FOUND Threads_FOUND PROTOZERO_INCLUDE_DIR)
     if(ZLIB_FOUND AND Threads_FOUND AND PROTOZERO_FOUND)
         list(APPEND OSMIUM_PBF_LIBRARIES
             ${ZLIB_LIBRARIES}
-            ${LZ4_LIBRARIES}
+            #${LZ4_LIBRARIES}
             ${CMAKE_THREAD_LIBS_INIT}
         )
         list(APPEND OSMIUM_INCLUDE_DIRS
             ${ZLIB_INCLUDE_DIR}
-            ${LZ4_INCLUDE_DIRS}
+            #${LZ4_INCLUDE_DIRS}
             ${PROTOZERO_INCLUDE_DIR}
         )
     else()
@@ -141,34 +141,34 @@ endif()
 
 #----------------------------------------------------------------------
 # Component 'xml'
-if(Osmium_USE_XML)
-    find_package(EXPAT)
-    find_package(BZip2)
-    find_package(ZLIB)
-    find_package(Threads)
-
-    list(APPEND OSMIUM_EXTRA_FIND_VARS EXPAT_FOUND BZIP2_FOUND ZLIB_FOUND Threads_FOUND)
-    if(EXPAT_FOUND AND BZIP2_FOUND AND ZLIB_FOUND AND Threads_FOUND)
-        list(APPEND OSMIUM_XML_LIBRARIES
-            ${EXPAT_LIBRARIES}
-            ${BZIP2_LIBRARIES}
-            ${ZLIB_LIBRARIES}
-            ${CMAKE_THREAD_LIBS_INIT}
-        )
-        list(APPEND OSMIUM_INCLUDE_DIRS
-            ${EXPAT_INCLUDE_DIR}
-            ${BZIP2_INCLUDE_DIR}
-            ${ZLIB_INCLUDE_DIR}
-        )
-    else()
-        message(WARNING "Osmium: Can not find some libraries for XML input/output, please install them or configure the paths.")
-    endif()
-endif()
+#if(Osmium_USE_XML)
+#    find_package(EXPAT)
+#    find_package(BZip2)
+#    find_package(ZLIB)
+#    find_package(Threads)
+#
+#    list(APPEND OSMIUM_EXTRA_FIND_VARS EXPAT_FOUND BZIP2_FOUND ZLIB_FOUND Threads_FOUND)
+#    if(EXPAT_FOUND AND BZIP2_FOUND AND ZLIB_FOUND AND Threads_FOUND)
+#        list(APPEND OSMIUM_XML_LIBRARIES
+#            ${EXPAT_LIBRARIES}
+#            ${BZIP2_LIBRARIES}
+#            ${ZLIB_LIBRARIES}
+#            ${CMAKE_THREAD_LIBS_INIT}
+#        )
+#        list(APPEND OSMIUM_INCLUDE_DIRS
+#            ${EXPAT_INCLUDE_DIR}
+#            ${BZIP2_INCLUDE_DIR}
+#            ${ZLIB_INCLUDE_DIR}
+#        )
+#    else()
+#        message(WARNING "Osmium: Can not find some libraries for XML input/output, please install them or configure the paths.")
+#    endif()
+#endif()
 
 #----------------------------------------------------------------------
 list(APPEND OSMIUM_IO_LIBRARIES
     ${OSMIUM_PBF_LIBRARIES}
-    ${OSMIUM_XML_LIBRARIES}
+    #${OSMIUM_XML_LIBRARIES}
 )
 
 list(APPEND OSMIUM_LIBRARIES
@@ -177,92 +177,92 @@ list(APPEND OSMIUM_LIBRARIES
 
 #----------------------------------------------------------------------
 # Component 'geos'
-if(Osmium_USE_GEOS)
-    find_path(GEOS_INCLUDE_DIR geos/geom.h)
-    find_library(GEOS_LIBRARY NAMES geos)
-
-    list(APPEND OSMIUM_EXTRA_FIND_VARS GEOS_INCLUDE_DIR GEOS_LIBRARY)
-    if(GEOS_INCLUDE_DIR AND GEOS_LIBRARY)
-        SET(GEOS_FOUND 1)
-        list(APPEND OSMIUM_LIBRARIES ${GEOS_LIBRARY})
-        list(APPEND OSMIUM_INCLUDE_DIRS ${GEOS_INCLUDE_DIR})
-    else()
-        message(WARNING "Osmium: GEOS library is required but not found, please install it or configure the paths.")
-    endif()
-endif()
+#if(Osmium_USE_GEOS)
+#    find_path(GEOS_INCLUDE_DIR geos/geom.h)
+#    find_library(GEOS_LIBRARY NAMES geos)
+#
+#    list(APPEND OSMIUM_EXTRA_FIND_VARS GEOS_INCLUDE_DIR GEOS_LIBRARY)
+#    if(GEOS_INCLUDE_DIR AND GEOS_LIBRARY)
+#        SET(GEOS_FOUND 1)
+#        list(APPEND OSMIUM_LIBRARIES ${GEOS_LIBRARY})
+#        list(APPEND OSMIUM_INCLUDE_DIRS ${GEOS_INCLUDE_DIR})
+#    else()
+#        message(WARNING "Osmium: GEOS library is required but not found, please install it or configure the paths.")
+#    endif()
+#endif()
 
 #----------------------------------------------------------------------
 # Component 'gdal' (alias 'ogr')
-if(Osmium_USE_GDAL)
-    find_package(GDAL)
-
-    list(APPEND OSMIUM_EXTRA_FIND_VARS GDAL_FOUND)
-    if(GDAL_FOUND)
-        list(APPEND OSMIUM_LIBRARIES ${GDAL_LIBRARIES})
-        list(APPEND OSMIUM_INCLUDE_DIRS ${GDAL_INCLUDE_DIRS})
-    else()
-        message(WARNING "Osmium: GDAL library is required but not found, please install it or configure the paths.")
-    endif()
-endif()
+#if(Osmium_USE_GDAL)
+#    find_package(GDAL)
+#
+#    list(APPEND OSMIUM_EXTRA_FIND_VARS GDAL_FOUND)
+#    if(GDAL_FOUND)
+#        list(APPEND OSMIUM_LIBRARIES ${GDAL_LIBRARIES})
+#        list(APPEND OSMIUM_INCLUDE_DIRS ${GDAL_INCLUDE_DIRS})
+#    else()
+#        message(WARNING "Osmium: GDAL library is required but not found, please install it or configure the paths.")
+#    endif()
+#endif()
 
 #----------------------------------------------------------------------
 # Component 'proj'
-if(Osmium_USE_PROJ)
-    find_path(PROJ_INCLUDE_DIR proj_api.h)
-    find_library(PROJ_LIBRARY NAMES proj)
-
-    list(APPEND OSMIUM_EXTRA_FIND_VARS PROJ_INCLUDE_DIR PROJ_LIBRARY)
-    if(PROJ_INCLUDE_DIR AND PROJ_LIBRARY)
-        set(PROJ_FOUND 1)
-        list(APPEND OSMIUM_LIBRARIES ${PROJ_LIBRARY})
-        list(APPEND OSMIUM_INCLUDE_DIRS ${PROJ_INCLUDE_DIR})
-    else()
-        message(WARNING "Osmium: PROJ.4 library is required but not found, please install it or configure the paths.")
-    endif()
-endif()
+#if(Osmium_USE_PROJ)
+#    find_path(PROJ_INCLUDE_DIR proj_api.h)
+#    find_library(PROJ_LIBRARY NAMES proj)
+#
+#    list(APPEND OSMIUM_EXTRA_FIND_VARS PROJ_INCLUDE_DIR PROJ_LIBRARY)
+#    if(PROJ_INCLUDE_DIR AND PROJ_LIBRARY)
+#        set(PROJ_FOUND 1)
+#        list(APPEND OSMIUM_LIBRARIES ${PROJ_LIBRARY})
+#        list(APPEND OSMIUM_INCLUDE_DIRS ${PROJ_INCLUDE_DIR})
+#    else()
+#        message(WARNING "Osmium: PROJ.4 library is required but not found, please install it or configure the paths.")
+#    endif()
+#endif()
 
 #----------------------------------------------------------------------
 # Component 'sparsehash'
-if(Osmium_USE_SPARSEHASH)
-    message(WARNING "Osmium: Use of Google SparseHash is deprecated. Please switch to a different index type.")
-    find_path(SPARSEHASH_INCLUDE_DIR google/sparsetable)
-
-    list(APPEND OSMIUM_EXTRA_FIND_VARS SPARSEHASH_INCLUDE_DIR)
-    if(SPARSEHASH_INCLUDE_DIR)
-        # Find size of sparsetable::size_type. This does not work on older
-        # CMake versions because they can do this check only in C, not in C++.
-        if(NOT CMAKE_VERSION VERSION_LESS 3.0)
-           include(CheckTypeSize)
-           set(CMAKE_REQUIRED_INCLUDES ${SPARSEHASH_INCLUDE_DIR})
-           set(CMAKE_EXTRA_INCLUDE_FILES "google/sparsetable")
-           check_type_size("google::sparsetable<int>::size_type" SPARSETABLE_SIZE_TYPE LANGUAGE CXX)
-           set(CMAKE_EXTRA_INCLUDE_FILES)
-           set(CMAKE_REQUIRED_INCLUDES)
-        else()
-           set(SPARSETABLE_SIZE_TYPE ${CMAKE_SIZEOF_VOID_P})
-        endif()
-
-        # Sparsetable::size_type must be at least 8 bytes (64bit), otherwise
-        # OSM object IDs will not fit.
-        if(SPARSETABLE_SIZE_TYPE GREATER 7)
-            set(SPARSEHASH_FOUND 1)
-            add_definitions(-DOSMIUM_WITH_SPARSEHASH=${SPARSEHASH_FOUND})
-            list(APPEND OSMIUM_INCLUDE_DIRS ${SPARSEHASH_INCLUDE_DIR})
-        else()
-            message(WARNING "Osmium: Disabled Google SparseHash library on 32bit system (size_type=${SPARSETABLE_SIZE_TYPE}).")
-        endif()
-    else()
-        message(WARNING "Osmium: Google SparseHash library is required but not found, please install it or configure the paths.")
-    endif()
-endif()
+#if(Osmium_USE_SPARSEHASH)
+#    message(WARNING "Osmium: Use of Google SparseHash is deprecated. Please switch to a different index type.")
+#    find_path(SPARSEHASH_INCLUDE_DIR google/sparsetable)
+#
+#    list(APPEND OSMIUM_EXTRA_FIND_VARS SPARSEHASH_INCLUDE_DIR)
+#    if(SPARSEHASH_INCLUDE_DIR)
+#        # Find size of sparsetable::size_type. This does not work on older
+#        # CMake versions because they can do this check only in C, not in C++.
+#        if(NOT CMAKE_VERSION VERSION_LESS 3.0)
+#           include(CheckTypeSize)
+#           set(CMAKE_REQUIRED_INCLUDES ${SPARSEHASH_INCLUDE_DIR})
+#           set(CMAKE_EXTRA_INCLUDE_FILES "google/sparsetable")
+#           check_type_size("google::sparsetable<int>::size_type" SPARSETABLE_SIZE_TYPE LANGUAGE CXX)
+#           set(CMAKE_EXTRA_INCLUDE_FILES)
+#           set(CMAKE_REQUIRED_INCLUDES)
+#        else()
+#           set(SPARSETABLE_SIZE_TYPE ${CMAKE_SIZEOF_VOID_P})
+#        endif()
+#
+#        # Sparsetable::size_type must be at least 8 bytes (64bit), otherwise
+#        # OSM object IDs will not fit.
+#        if(SPARSETABLE_SIZE_TYPE GREATER 7)
+#            set(SPARSEHASH_FOUND 1)
+#            add_definitions(-DOSMIUM_WITH_SPARSEHASH=${SPARSEHASH_FOUND})
+#            list(APPEND OSMIUM_INCLUDE_DIRS ${SPARSEHASH_INCLUDE_DIR})
+#        else()
+#            message(WARNING "Osmium: Disabled Google SparseHash library on 32bit system (size_type=${SPARSETABLE_SIZE_TYPE}).")
+#        endif()
+#    else()
+#        message(WARNING "Osmium: Google SparseHash library is required but not found, please install it or configure the paths.")
+#    endif()
+#endif()
 
 #----------------------------------------------------------------------
 
 list(REMOVE_DUPLICATES OSMIUM_INCLUDE_DIRS)
 
-if(OSMIUM_XML_LIBRARIES)
-    list(REMOVE_DUPLICATES OSMIUM_XML_LIBRARIES)
-endif()
+#if(OSMIUM_XML_LIBRARIES)
+#    list(REMOVE_DUPLICATES OSMIUM_XML_LIBRARIES)
+#endif()
 
 if(OSMIUM_PBF_LIBRARIES)
     list(REMOVE_DUPLICATES OSMIUM_PBF_LIBRARIES)
