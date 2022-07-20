@@ -68,19 +68,19 @@ if(CMAKE_BUILD_TYPE STREQUAL "Coverage")
     set(data_test_build ON)
 endif()
 
-option(BUILD_EXAMPLES   "compile example programs" ON)
-option(BUILD_TESTING    "compile unit tests, please run them with ctest" ON)
+option(BUILD_EXAMPLES   "compile example programs" OFF)
+option(BUILD_TESTING    "compile unit tests, please run them with ctest" OFF)
 
 option(BUILD_HEADERS    "compile every header file on its own" ${dev_build})
 option(BUILD_BENCHMARKS "compile benchmark programs" ${dev_build})
 
-option(BUILD_DATA_TESTS "compile data tests, please run them with ctest" ${data_test_build})
+#option(BUILD_DATA_TESTS "compile data tests, please run them with ctest" ${data_test_build})
 
-option(INSTALL_GDALCPP   "also install gdalcpp headers" OFF)
+option(INSTALL_GDALCPP   "also install gdalcpp headers" ON)
 
 option(WITH_PROFILING    "add flags needed for profiling" OFF)
 
-option(WITH_PROJ         "build/test with proj" ON)
+option(WITH_PROJ         "build/test with proj" OFF)
 
 
 #-----------------------------------------------------------------------------
@@ -154,26 +154,27 @@ endif()
 #
 #-----------------------------------------------------------------------------
 
-find_package(Boost 1.38)
-mark_as_advanced(CLEAR BOOST_ROOT)
-
-if(Boost_FOUND)
-    include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
-else()
-    set(BOOST_ROOT "NOT FOUND: please choose" CACHE PATH "")
-    message(FATAL_ERROR "PLEASE, specify the directory where the Boost library is installed in BOOST_ROOT")
-endif()
+#find_package(Boost 1.38)
+#mark_as_advanced(CLEAR BOOST_ROOT)
+#
+#if(Boost_FOUND)
+#    include_directories(SYSTEM ${Boost_INCLUDE_DIRS})
+#else()
+#    set(BOOST_ROOT "NOT FOUND: please choose" CACHE PATH "")
+#    message(FATAL_ERROR "PLEASE, specify the directory where the Boost library is installed in BOOST_ROOT")
+#endif()
 
 # set OSMIUM_INCLUDE_DIR so FindOsmium will not set anything different
 set(OSMIUM_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 include_directories(${OSMIUM_INCLUDE_DIR})
 
-if(WITH_PROJ)
-    find_package(Osmium COMPONENTS lz4 io gdal geos proj)
-else()
-    find_package(Osmium COMPONENTS lz4 io gdal geos)
-endif()
+#if(WITH_PROJ)
+#    find_package(Osmium COMPONENTS lz4 io gdal geos proj)
+#else()
+#find_package(Osmium COMPONENTS lz4 io gdal geos)
+find_package(Osmium COMPONENTS lz4 io)
+#endif()
 
 # The find_package put the directory where it found the libosmium includes
 # into OSMIUM_INCLUDE_DIRS. We remove it again, because we want to make
