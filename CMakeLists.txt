@@ -154,6 +154,7 @@ endif()
 #
 #-----------------------------------------------------------------------------
 
+## Remove dependency on Boost
 #find_package(Boost 1.38)
 #mark_as_advanced(CLEAR BOOST_ROOT)
 #
@@ -169,12 +170,7 @@ set(OSMIUM_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 include_directories(${OSMIUM_INCLUDE_DIR})
 
-#if(WITH_PROJ)
-#    find_package(Osmium COMPONENTS lz4 io gdal geos proj)
-#else()
-#find_package(Osmium COMPONENTS lz4 io gdal geos)
 find_package(Osmium COMPONENTS lz4 io)
-#endif()
 
 # The find_package put the directory where it found the libosmium includes
 # into OSMIUM_INCLUDE_DIRS. We remove it again, because we want to make
@@ -277,7 +273,6 @@ if(CMAKE_BUILD_TYPE)
     set(build_type ${CMAKE_BUILD_TYPE})
 else()
     set(build_type "RelWithDebInfo")
-    #set(build_type "Release")
 endif()
 
 set(CMAKE_BUILD_TYPE ${build_type}
